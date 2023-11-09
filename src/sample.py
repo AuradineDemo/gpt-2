@@ -104,6 +104,16 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
 
         return tokens
     
+
 if __name__ == '__main__':
-    fire.Fire(interact_model)
-    
+    import json
+    import os
+    import numpy as np
+    import encoder
+
+    models_dir = 'models'
+    model_name = '117M'
+    seed = None
+    nsamples = 1
+    batch_size = 1
+    length = None
