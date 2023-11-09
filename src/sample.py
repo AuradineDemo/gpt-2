@@ -3,16 +3,6 @@ import tensorflow as tf
 import model
 
 def top_k_logits(logits, k):
-    """
-    Filters logits to only the top-k choices.
-
-    Args:
-        logits: A tensor of shape (batch_size, vocab_size).
-        k: An integer representing the number of top choices to keep.
-
-    Returns:
-        A tensor of shape (batch_size, vocab_size) with the logits for only the top-k choices.
-    """
     if k == 0:
         # no truncation
         return logits
