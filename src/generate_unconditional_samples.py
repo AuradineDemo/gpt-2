@@ -50,6 +50,8 @@ def sample_model(
         length = hparams.n_ctx
     elif length > hparams.n_ctx:
         raise ValueError("Can't get samples longer than window size: %s" % hparams.n_ctx)
+    else:
+        print("Length is not None and is less than hparams.n_ctx")
 
     with tf.Session(graph=tf.Graph()) as sess:
         np.random.seed(seed)
@@ -74,6 +76,7 @@ def sample_model(
                 text = enc.decode(out[i])
                 print("=" * 40 + " SAMPLE " + str(generated) + " " + "=" * 40)
                 print(text)
+
 
 if __name__ == '__main__':
     fire.Fire(sample_model)
