@@ -103,12 +103,7 @@ def sample_sequence(*, hparams, length, start_token=None, batch_size=None, conte
         )
 
         return tokens
-
+    
 if __name__ == '__main__':
-    import json
-    import os
-    import numpy as np
-    import encoder
-
-    # Path: src/sample.py
-    # Compare this snippet from src
+    fire.Fire(interact_model)
+    
