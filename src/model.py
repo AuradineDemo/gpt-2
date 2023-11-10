@@ -148,6 +148,8 @@ def model(hparams, X, past=None, scope='model', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
         results = {}
         batch, sequence = shape_list(X)
+        print('batch, sequence', batch, sequence)
+
 
         wpe = tf.get_variable('wpe', [hparams.n_ctx, hparams.n_embd],
                              initializer=tf.random_normal_initializer(stddev=0.01))
@@ -155,7 +157,7 @@ def model(hparams, X, past=None, scope='model', reuse=False):
                              initializer=tf.random_normal_initializer(stddev=0.02))
         past_length = 0 if past is None else tf.shape(past)[-2]
         h = tf.gather(wte, X) + tf.gather(wpe, positions_for(X, past_length))
-
+        
         # Transformer
         presents = []
         pasts = tf.unstack(past, axis=1) if past is not None else [None] * hparams.n_layer
@@ -179,5 +181,6 @@ if __name__ == '__main__':
     hparams = default_hparams()
     X = tf.placeholder(tf.int32, [1, None])
     past = tf.placeholder(tf.float32, [1, 12, 2, 12, None, 64])
+    print(X)
     results = model(hparams, X, past)
     print(results)
