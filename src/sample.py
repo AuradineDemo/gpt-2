@@ -52,6 +52,22 @@ def top_p_logits(logits, p):
 
 
 def sample_sequence(*, hparams, length, start_token=None, batch_size=None, context=None, temperature=1, top_k=0, top_p=1):
+    """
+    Generate a sequence of tokens using the GPT-2 model.
+
+    Args:
+        hparams: A dictionary of hyperparameters for the GPT-2 model.
+        length: The length of the sequence to generate.
+        start_token: The token to start the sequence with. If None, the context argument must be provided.
+        batch_size: The number of sequences to generate in parallel.
+        context: The context to start the sequence with. If None, the start_token argument must be provided.
+        temperature: The temperature to use when sampling from the model.
+        top_k: The number of top-k tokens to consider when sampling from the model.
+        top_p: The cumulative probability threshold to use when sampling from the model.
+
+    Returns:
+        A tensor of shape (batch_size, length) containing the generated sequence of tokens.
+    """
     if start_token is None:
         assert context is not None, 'Specify exactly one of start_token and context!'
     else:
