@@ -172,3 +172,12 @@ def model(hparams, X, past=None, scope='model', reuse=False):
         logits = tf.reshape(logits, [batch, sequence, hparams.n_vocab])
         results['logits'] = logits
         return results
+
+
+## Add a main function for UT
+if __name__ == '__main__':
+    hparams = default_hparams()
+    X = tf.placeholder(tf.int32, [1, None])
+    past = tf.placeholder(tf.float32, [1, 12, 2, 12, None, 64])
+    results = model(hparams, X, past)
+    print(results)
