@@ -148,9 +148,7 @@ def model(hparams, X, past=None, scope='model', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
         results = {}
         batch, sequence = shape_list(X)
-        print('batch, sequence', batch, sequence)
-
-
+        print(batch, sequence)
         wpe = tf.get_variable('wpe', [hparams.n_ctx, hparams.n_embd],
                              initializer=tf.random_normal_initializer(stddev=0.01))
         wte = tf.get_variable('wte', [hparams.n_vocab, hparams.n_embd],
@@ -175,12 +173,15 @@ def model(hparams, X, past=None, scope='model', reuse=False):
         results['logits'] = logits
         return results
 
-
-## Add a main function for UT
+# If run as is (main), run an example using the above functions as UT
 if __name__ == '__main__':
     hparams = default_hparams()
     X = tf.placeholder(tf.int32, [1, None])
-    past = tf.placeholder(tf.float32, [1, 12, 2, 12, None, 64])
-    print(X)
-    results = model(hparams, X, past)
+    past = tf.placeholder(tf.float32, [1, 2, 12, None, 64])
+    results = model(hparams=hparams, X=X, past=past, reuse=False)
+    print(results)
+
+    sess = tf.Session()
+    sess.run(tf.global_variables_initializer())
+    results = sess.run(results, feed_dict={X: np.random.randint(0, 1000, [1, 10])})
     print(results)
