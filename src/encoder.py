@@ -40,6 +40,38 @@ def get_pairs(word):
     return pairs
 
 class Encoder:
+    """
+    A class used to encode and decode text using byte pair encoding (BPE).
+
+    Attributes
+    ----------
+    encoder : dict
+        A dictionary that maps bytes to integers.
+    decoder : dict
+        A dictionary that maps integers to bytes.
+    errors : str
+        A string that specifies how to handle errors in decoding.
+    byte_encoder : dict
+        A dictionary that maps bytes to unicode characters.
+    byte_decoder : dict
+        A dictionary that maps unicode characters to bytes.
+    bpe_ranks : dict
+        A dictionary that maps BPE merges to their rank.
+    cache : dict
+        A dictionary that stores the results of BPE encoding for each token.
+    pat : re.Pattern
+        A compiled regular expression pattern used to tokenize text.
+
+    Methods
+    -------
+    bpe(token)
+        Encodes a single token using BPE.
+    encode(text)
+        Encodes a text using BPE.
+    decode(tokens)
+        Decodes a list of tokens into text.
+    """
+
     def __init__(self, encoder, bpe_merges, errors='replace'):
         self.encoder = encoder
         self.decoder = {v:k for k,v in self.encoder.items()}
@@ -57,6 +89,7 @@ class Encoder:
             return self.cache[token]
         word = tuple(token)
         pairs = get_pairs(word)
+        print(pairs)
 
         if not pairs:
             return token
@@ -115,3 +148,15 @@ def get_encoder(model_name, models_dir):
         encoder=encoder,
         bpe_merges=bpe_merges,
     )
+
+## If ran as standalone, use a main function as an example of usage
+if __name__ == '__main__':
+    import sys
+    models_dir = 'models'
+    model_name = '117M'
+    text = "I love you so much, you are my everything"
+    encoder = get_encoder(model_name, models_dir)
+    tokens = encoder.encode(text)
+    print(tokens)
+    text = encoder.decode(tokens)
+    print(text)
