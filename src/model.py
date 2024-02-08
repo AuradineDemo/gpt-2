@@ -136,6 +136,19 @@ def mlp(x, scope, n_state, *, hparams):
 
 
 def block(x, scope, *, past, hparams):
+    """
+    Perform a block operation on the input tensor.
+
+    Args:
+        x (tf.Tensor): The input tensor.
+        scope (str): The variable scope for the block operation.
+        past (tf.Tensor): The past tensor for the block operation.
+        hparams (dict): The hyperparameters for the block operation.
+
+    Returns:
+        tf.Tensor: The output tensor after the block operation.
+        tf.Tensor: The present tensor after the block operation.
+    """
     with tf.variable_scope(scope):
         nx = x.shape[-1].value
         a, present = attn(norm(x, 'ln_1'), 'attn', nx, past=past, hparams=hparams)
@@ -158,6 +171,18 @@ def positions_for(tokens, past_length):
     nsteps = tf.shape(tokens)[1]
     return expand_tile(past_length + tf.range(nsteps), batch_size)
 
+## UT for model
+def ut_model():
+    hparams = default_hparams()
+    X = tf.placeholder(tf.int32, [1, None])
+    past = tf.placeholder(tf.float32, [1, 2, 12, None, 64])
+    results = model(hparams=hparams, X=X, past=past, reuse=False)
+    print(results)
+
+    sess = tf.Session()
+    sess.run(tf.global_variables_initializer())
+    results = sess.run(results, feed_dict={X: np.random.randint(0, 1000, [1, 10])})
+    print(results)
 
 def model(hparams, X, past=None, scope='model', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
@@ -170,7 +195,7 @@ def model(hparams, X, past=None, scope='model', reuse=False):
                              initializer=tf.random_normal_initializer(stddev=0.02))
         past_length = 0 if past is None else tf.shape(past)[-2]
         h = tf.gather(wte, X) + tf.gather(wpe, positions_for(X, past_length))
-        
+                
         # Transformer
         presents = []
         pasts = tf.unstack(past, axis=1) if past is not None else [None] * hparams.n_layer
