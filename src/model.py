@@ -91,6 +91,32 @@ def attention_mask(nd, ns, *, dtype):
 
 
 def attn(x, scope, n_state, *, past, hparams):
+    """
+    Attention mechanism for the GPT-2 model.
+
+    Args:
+        x: Input tensor of shape [batch, sequence, features].
+        scope: Variable scope for the attention mechanism.
+        n_state: Number of output features.
+        past: Tensor containing the previous attention weights.
+        hparams: Hyperparameters for the attention mechanism.
+
+    Returns:
+        a: Output tensor of shape [batch, sequence, n_state].
+        present: Tensor containing the current attention weights.
+
+    Raises:
+        AssertionError: If the shape of x or past is incorrect.
+    """
+    
+    assert x.shape.ndims == 3  # Should be [batch, sequence, features]
+    assert n_state % hparams.n_head == 0
+    if past is not None:
+        assert past.shape.ndims == 5  # Should be [batch, 2, heads, sequence, features], where 2 is [k, v]
+
+    # Rest of the code...
+def attn(x, scope, n_state, *, past, hparams):
+    
     assert x.shape.ndims == 3  # Should be [batch, sequence, features]
     assert n_state % hparams.n_head == 0
     if past is not None:
