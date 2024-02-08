@@ -1,6 +1,9 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow.contrib.training import HParams
+import random
+import datetime
+import random
 
 def default_hparams():
     return HParams(
@@ -10,6 +13,18 @@ def default_hparams():
         n_head=12,
         n_layer=12,
     )
+
+def generate_random_date(start_date, end_date):
+    start_timestamp = start_date.timestamp()
+    end_timestamp = end_date.timestamp()
+    random_timestamp = random.uniform(start_timestamp, end_timestamp)
+    random_date = datetime.datetime.fromtimestamp(random_timestamp)
+    return random_date
+
+def generate_random_number():
+    return random.random()
+
+
 
 def shape_list(x):
     """Deal with dynamic shape in tensorflow cleanly."""
