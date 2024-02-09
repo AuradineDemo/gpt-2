@@ -31,9 +31,36 @@ def fibonacci(n):
         series.append(next_num)  # Add the next number to the series
     return series
 
-
-
-
+def generate_pascal_triangle(num_rows):
+    """
+    Generates Pascal's triangle up to the specified number of rows.
+    
+    Args:
+        num_rows (int): The number of rows to generate in Pascal's triangle.
+        
+    Returns:
+        list: A list of lists representing Pascal's triangle.
+    """
+    
+    # Initialize an empty list to store the triangle
+    triangle = []
+    
+    # Iterate through each row
+    for row in range(num_rows):
+        # Create a list with all elements set to 1 for the current row
+        current_row = [1] * (row + 1)
+        
+        # Calculate the values for the current row based on the previous row
+        if row > 1:
+            previous_row = triangle[row - 1]
+            for i in range(1, row):
+                current_row[i] = previous_row[i - 1] + previous_row[i]
+        
+        # Append the current row to the triangle
+        triangle.append(current_row)
+    
+    # Return the generated Pascal's triangle
+    return triangle
 
 def shape_list(x):
     """Deal with dynamic shape in tensorflow cleanly."""
