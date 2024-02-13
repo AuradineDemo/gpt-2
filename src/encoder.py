@@ -37,6 +37,7 @@ def get_pairs(word):
     for char in word[1:]:
         pairs.add((prev_char, char))
         prev_char = char
+    print()
     return pairs
 
 class Encoder:
@@ -137,6 +138,16 @@ class Encoder:
         text = ''.join([self.decoder[token] for token in tokens])
         text = bytearray([self.byte_decoder[c] for c in text]).decode('utf-8', errors=self.errors)
         return text
+
+        def debug():
+            models_dir = 'models'
+            model_name = '117M'
+            encoder = get_encoder(model_name, models_dir)
+            # Perform debugging operations here
+            # ...
+            # Example: Print the encoder dictionary
+            print(encoder.encoder)
+
 
 def get_encoder(model_name, models_dir):
     with open(os.path.join(models_dir, model_name, 'encoder.json'), 'r') as f:
