@@ -91,6 +91,7 @@ class Encoder:
         word = tuple(token)
         pairs = get_pairs(word)
         print(pairs)
+        print(self.bpe_ranks)
 
         if not pairs:
             return token
@@ -139,14 +140,28 @@ class Encoder:
         text = bytearray([self.byte_decoder[c] for c in text]).decode('utf-8', errors=self.errors)
         return text
 
-        def debug():
-            models_dir = 'models'
-            model_name = '117M'
-            encoder = get_encoder(model_name, models_dir)
-            # Perform debugging operations here
-            # ...
-            # Example: Print the encoder dictionary
-            print(encoder.encoder)
+        def debug_get_encoder(model_name, models_dir):
+            encoder_file = os.path.join(models_dir, model_name, 'encoder.json')
+            bpe_file = os.path.join(models_dir, model_name, 'vocab.bpe')
+            
+            print(f"Encoder File: {encoder_file}")
+            print(f"BPE File: {bpe_file}")
+            
+            with open(encoder_file, 'r') as f:
+                encoder = json.load(f)
+            with open(bpe_file, 'r', encoding="utf-8") as f:
+                bpe_data = f.read()
+            bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split('\n')[1:-1]]
+            
+            print("Encoder:")
+            print(encoder)
+            print("BPE Merges:")
+            print(bpe_merges)
+            
+            return Encoder(
+                encoder=encoder,
+                bpe_merges=bpe_merges,
+            )
 
 
 def get_encoder(model_name, models_dir):
@@ -155,6 +170,7 @@ def get_encoder(model_name, models_dir):
     with open(os.path.join(models_dir, model_name, 'vocab.bpe'), 'r', encoding="utf-8") as f:
         bpe_data = f.read()
     bpe_merges = [tuple(merge_str.split()) for merge_str in bpe_data.split('\n')[1:-1]]
+    print(f"bpe_merges", bpe_merges)
     return Encoder(
         encoder=encoder,
         bpe_merges=bpe_merges,
