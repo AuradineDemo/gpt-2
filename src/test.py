@@ -4,14 +4,19 @@ import random
 
 def get_random_alphabet():
     """
-    Returns a random alphabet.
+    Returns the hexadecimal value of a randomly chosen alphabet.
 
     Returns:
-        str: A random alphabet.
+        str: The hexadecimal value of a randomly chosen alphabet.
     """
     # Select a random alphabet from the string of alphabets
     alphabets = 'abcdefghijklmnopqrstuvwxyz'
-    return random.choice(alphabets)
+    random_alphabet = random.choice(alphabets)
+    
+    # Convert the randomly chosen alphabet to hexadecimal
+    hex_value = hex(ord(random_alphabet))
+    
+    return hex_value
 
 def main():
     print("Hello World!")
