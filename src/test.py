@@ -1,4 +1,15 @@
 import random
+
+def get_random_alphabet():
+    """
+    Returns a random alphabet.
+
+    Returns:
+        str: A random alphabet.
+    """
+    alphabets = 'abcdefghijklmnopqrstuvwxyz'
+    return random.choice(alphabets)
+
 def main():
     print("Hello World!")
 
@@ -28,9 +39,7 @@ def main():
 
             return fib_sum
         
-            def random_alphabet():
-                alphabet = 'abcdefghijklmnopqrstuvwxyz'
-                return random.choice(alphabet)
+    
 
 
 if __name__ == '__main__':
