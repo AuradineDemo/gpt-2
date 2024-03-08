@@ -1,3 +1,4 @@
+import random
 def main():
     print("Hello World!")
 
@@ -26,6 +27,10 @@ def main():
                 fib_prev, fib_curr = fib_curr, fib_prev + fib_curr
 
             return fib_sum
+        
+            def random_alphabet():
+                alphabet = 'abcdefghijklmnopqrstuvwxyz'
+                return random.choice(alphabet)
 
 
 if __name__ == '__main__':
