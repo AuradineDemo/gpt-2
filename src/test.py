@@ -12,6 +12,19 @@ def get_random_color():
     
     return random_color
 
+    def get_sum_of_10_numbers():
+        """
+        Returns the sum of 10 numbers.
+
+        Returns:
+            int: The sum of 10 numbers.
+        """
+        numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        sum_of_numbers = sum(numbers)
+        
+        return sum_of_numbers
+
+
 
 def get_random_alphabet():
     """
