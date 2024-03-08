@@ -1,6 +1,17 @@
 import random
 
-import random
+def get_random_color():
+    """
+    Returns a randomly chosen color.
+
+    Returns:
+        str: A randomly chosen color.
+    """
+    colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple']
+    random_color = random.choice(colors)
+    
+    return random_color
+
 
 def get_random_alphabet():
     """
