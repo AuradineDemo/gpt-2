@@ -1,5 +1,7 @@
 import random
 
+import random
+
 def get_random_alphabet():
     """
     Returns a random alphabet.
@@ -7,6 +9,7 @@ def get_random_alphabet():
     Returns:
         str: A random alphabet.
     """
+    # Select a random alphabet from the string of alphabets
     alphabets = 'abcdefghijklmnopqrstuvwxyz'
     return random.choice(alphabets)
 
