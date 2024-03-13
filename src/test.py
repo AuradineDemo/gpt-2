@@ -17,6 +17,25 @@ def get_random_date():
     
     return formatted_date
 
+def add_two_floats(float1, float2):
+    """
+    Adds two floats and returns the result formatted to 2 decimal places.
+
+    Args:
+        float1 (float): The first float.
+        float2 (float): The second float.
+
+    Returns:
+        str: The sum of the two floats formatted to 2 decimal places.
+    """
+    result = float1 + float2
+    formatted_result = "{:.2f}".format(result)
+    
+    return formatted_result
+
+
+
+
 def get_random_color():
     """
     Returns a randomly chosen color.
