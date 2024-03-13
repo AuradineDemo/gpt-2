@@ -1,4 +1,21 @@
 import random
+from datetime import datetime
+
+def get_random_date():
+    """
+    Returns a randomly chosen date in the format 'YYYY-MM-DD'.
+
+    Returns:
+        str: A randomly chosen date in the format 'YYYY-MM-DD'.
+    """
+    year = random.randint(1900, 2022)
+    month = random.randint(1, 12)
+    day = random.randint(1, 28)
+    
+    date = datetime(year, month, day)
+    formatted_date = date.strftime('%Y-%m-%d')
+    
+    return formatted_date
 
 def get_random_color():
     """
@@ -12,17 +29,26 @@ def get_random_color():
     
     return random_color
 
-    def get_sum_of_10_numbers():
-        """
-        Returns the sum of 10 numbers.
+def get_sum_of_10_numbers():
+    """
+    Returns the sum of 10 numbers.
 
-        Returns:
-            int: The sum of 10 numbers.
-        """
-        numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        sum_of_numbers = sum(numbers)
+    Returns:
+    int: The sum of 10 numbers.
+    """
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sum_of_numbers = sum(numbers)
+    numbers.append(11)
+    
+    multiplied_numbers = [num * 2 for num in numbers]
         
-        return sum_of_numbers
+    return multiplied_numbers
+
+def test_func():
+    return 1+2+3+4
+
+
+
 
 
 
